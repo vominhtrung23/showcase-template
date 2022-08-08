@@ -1,6 +1,4 @@
-[build]
-  publish = "dist/CspMasterTemplate"
-[[/showcase/1r-zy1nhm-nl7zmhnl&f8pafc]]
+[[redirects]]
   from = "/*"
   to = "/index.html"
   status = 200
