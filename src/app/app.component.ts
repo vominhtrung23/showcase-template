@@ -23,6 +23,7 @@ declare var cspConsumerInfo: any;
 })
 export class AppComponent implements OnInit {
   title = '';
+  
   public rawCategory: CategoryModel[] = [];
 
   constructor(public sanitizer: DomSanitizer, private _dataService: CspdataService,
