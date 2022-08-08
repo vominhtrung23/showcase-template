@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ViewEncapsulation } from '@angular/core';
+import { Component, OnInit, Input, ViewEncapsulation ,ViewChild, ElementRef} from '@angular/core';
 import { FieldModel } from 'src/app/shared/models/field.model';
 import { FormGroup } from '@angular/forms';
 import { GlobalService } from 'src/app/services/global.service';
@@ -14,7 +14,10 @@ export class LeadgenfieldComponent implements OnInit {
   @Input() form: FormGroup;
 
   constructor(private _gl: GlobalService) {}
-
+  @ViewChild("myinput") myInputField: ElementRef;
+ngAfterViewInit() {
+this.myInputField.nativeElement.focus();
+}
   ngOnInit(): void {}
 
   get isValid() {
