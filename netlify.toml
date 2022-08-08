@@ -1,0 +1,6 @@
+[build]
+  publish = "dist/CspMasterTemplate"
+[[/showcase/1r-zy1nhm-nl7zmhnl&f8pafc]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
