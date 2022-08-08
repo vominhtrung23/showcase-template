@@ -1,0 +1,28 @@
+<div [formGroup]="form">
+  
+  <div [ngSwitch]="getContentType()">
+
+    <mat-form-field *ngSwitchCase="'textbox'" class="csp-field-full-width" class="fieldform" >
+      <mat-label>{{leadField.label}}</mat-label>
+      <input *ngIf="leadField.key.indexOf('mail') < 0" matInput placeholder="{{leadField.label}}" value="" [id]="leadField.key" [formControlName]="leadField.key" cdkFocusInitial md-autofocus>
+      <input *ngIf="leadField.key.indexOf('mail') >= 0" pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}" matInput placeholder="{{leadField.label}}" value="" [id]="leadField.key" [formControlName]="leadField.key">
+    </mat-form-field>
+
+    <select [id]="leadField.key" *ngSwitchCase="'dropdown'" [formControlName]="leadField.key" class="fieldform">
+      <option *ngFor="let opt of leadField.options" [value]="opt.value">{{opt.key}}</option>
+    </select>
+
+    <mat-form-field *ngSwitchCase="'textarea'" class="csp-field-full-width" class="fieldform">
+      <mat-label>{{leadField.label}}</mat-label>
+      <input matInput placeholder="{{leadField.label}}" value="" [id]="leadField.key" [formControlName]="leadField.key">
+      <textarea matInput value="" [id]="leadField.key" [formControlName]="leadField.key"></textarea>
+    </mat-form-field>
+
+    <mat-checkbox *ngSwitchCase="'checkbox'" [formControlName]="leadField.key" (change)='checkboxChange(leadField, $event)' class="flex-wrap mb-2" class="fieldform">
+      <!-- {{leadField.label}} -->
+      <span [outerHTML]="getLabel() | sanitizeHtml"></span>
+      <!-- <span class="gdpr-required">*</span> -->
+    </mat-checkbox>
+  </div>
+</div>
+  

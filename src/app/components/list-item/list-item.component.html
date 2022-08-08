@@ -1,0 +1,280 @@
+<ng-template [ngTemplateOutlet]="appList" [ngTemplateOutletContext]="{ $implicit: item }"></ng-template>
+<ng-template #appList let-item>
+  <div *ngIf="isParent(item.type) && checkCategorySubscribe(item)" class="flex list-elements" fxFlex [id]="item.uId"
+    [fxLayout]="fxLayout(item, 'default')" [fxLayoutAlign]="fxLayoutAlign(item, 'default')"
+    [fxLayout.sm]="fxLayout(item, 'sm')" [fxLayoutAlign.sm]="fxLayoutAlign(item, 'sm')"
+    [fxLayout.md]="fxLayout(item, 'md')" [fxLayoutAlign.md]="fxLayoutAlign(item, 'md')"
+    [fxLayout.lg]="fxLayout(item, 'lg')" [fxLayoutAlign.lg]="fxLayoutAlign(item, 'lg')"
+    [fxLayout.xl]="fxLayout(item, 'xl')" [fxLayoutAlign.xl]="fxLayoutAlign(item, 'xl')">
+
+    <ng-container *ngIf="item.children?.length > 0">
+      <ng-container *ngFor="let subItem of item.children; let i = index">
+        <div class="relative" [id]="subItem.type + '-' + subItem.uId"
+          *ngIf="(subItem.class.indexOf('csp-hide-unsub') == -1 || checkChildrenSubscribeStatus(subItem)) && checkCategorySubscribe(subItem)"
+          [class]="getDivClass(subItem)" [ngStyle]="getStyles(subItem)" [attr.data-type]="subItem.type">
+          <ng-container *ngIf="subItem">
+            <ng-container *ngTemplateOutlet="subItemTemplate; context:{subItem: subItem}"></ng-container>
+          </ng-container>
+          <app-list-item *ngIf="isParent(subItem.type)" [item]="subItem">
+          </app-list-item>
+        </div>
+      </ng-container>
+    </ng-container>
+  </div>
+</ng-template>
+<ng-template #subItemTemplate let-subItem="subItem">
+  <ng-container *ngIf="subItem.name == 'iframe'">
+    <iframe *ngIf="getPropsIframe(subItem, 'allowfullscreen')" [src]="getSrcIframe(subItem) | safe" width="100%" height="100%" frameborder="0" 
+      [class]="getItemClass(subItem)" [id]="'iframe-' + subItem.uId" [scrolling]="getPropsIframe(subItem, 'scrolling')" (load)="loadIframe()"
+      webkitallowfullscreen mozallowfullscreen allowfullscreen>
+    </iframe>
+    <iframe *ngIf="!getPropsIframe(subItem, 'allowfullscreen')" [src]="getSrcIframe(subItem) | safe" width="100%" height="100%" frameborder="0"
+      [class]="getItemClass(subItem)" [id]="'iframe-' + subItem.uId" [scrolling]="getPropsIframe(subItem, 'scrolling')" (load)="loadIframe()">
+    </iframe>
+  </ng-container>
+  <img *ngIf="subItem.name == 'image' && subItem.type == 'img' && !getProps(subItem, 'href') && !getProps(subItem, 'categoryLink')" [ngStyle]="getStyles(subItem)"
+    (load)="onLoad()" [src]="getImgSrc(subItem, 'src')"
+    [class]="getItemClass(subItem)">
+  <video *ngIf="(subItem.name == 'image' || subItem.name == 'video') && subItem.type == 'video'" [ngStyle]="getStyles(subItem)" [class]="getItemClass(subItem)" 
+    [poster]="getImgSrc(subItem, 'src')" controls>
+    <source [src]="getProps(subItem, 'href')">
+    Your browser does not support the video tag.
+  </video>
+  <!-- <a  *ngIf       ="subItem.name == 'button' && (subItem.class.indexOf('csp-deep-link') == -1 || subItem.innerClass.indexOf('csp-deep-link') == -1) && getProps(subItem, 'assetform') == undefined" -->
+  <ng-container *ngIf="subItem.name == 'button'">
+    <ng-container [ngSwitch]="getProps(subItem, 'btnType')">
+    <a *ngSwitchCase="type.toggleBtn" class="cursor-pointer" [ngStyle]="getStyles(subItem)" (click)="clickToggleBtn($event, subItem)"
+        [class]="getItemClass(subItem)" [attr.btnType]="'toggleBtn'"
+        [innerHTML]="getSafeContent(subItem) ">
+    </a>
+    <ng-container *ngSwitchCase="type.categoryLink">
+      <a *ngIf="checkSubscribeStatus(subItem)" [attr.btnType]="'categoryLink'"
+        class="cursor-pointer" [ngStyle]="getStyles(subItem)" [attr.cspobj]="'REPORT'" [attr.csptype]="'LINKS'"
+        [attr.cspenglishvalue]="getCspReportValue(subItem)" (click)="clickCategoryLink($event, subItem)"
+        [class]="getItemClass(subItem)"
+        [innerHTML]="getSafeContent(subItem) "></a>
+    </ng-container>
+    <a *ngSwitchCase="type.videoLink" class="cursor-pointer" [attr.btnType]="'videoLink'"
+        [ngStyle]="getStyles(subItem)" [attr.cspobj]="'REPORT'" [attr.csptype]="'DOWNLOADS'"
+        [attr.cspenglishvalue]="getCspReportValue(subItem)" (click)="clickWatchVideo($event, subItem)"
+        [class]="getItemClass(subItem)"
+        [innerHTML]="getSafeContent(subItem) ">
+    </a>
+    <a *ngSwitchCase="type.embedDialog" class="cursor-pointer" [attr.btnType]="'embedDialog'" [ngStyle]="getStyles(subItem)"
+      [attr.cspobj]="'REPORT'" [attr.csptype]="'DOWNLOADS'" [attr.cspenglishvalue]="getCspReportValue(subItem)"
+      (click)="clickEmbedDialog($event, subItem)" [class]="getItemClass(subItem)"
+      [innerHTML]="getSafeContent(subItem) ">
+    </a>
+    <a *ngSwitchCase="type.assetsLink" class="cursor-pointer" [attr.btnType]="'assetsLink'"
+        [ngStyle]="getStyles(subItem)" [attr.cspobj]="'REPORT'" [attr.csptype]="'DOWNLOADS'"
+        [attr.cspenglishvalue]="getCspReportValue(subItem)" (click)="clickAssetsLink($event, subItem)"
+        [class]="getItemClass(subItem)"
+        [innerHTML]="getSafeContent(subItem) ">
+    </a>
+    <a *ngSwitchCase="type.downloadLink" class="cursor-pointer" [attr.btnType]="'downloadLink'"
+        [ngStyle]="getStyles(subItem)" [attr.cspobj]="'REPORT'" [attr.csptype]="'DOWNLOADS'"
+        [attr.cspenglishvalue]="getCspReportValue(subItem)" (click)="clickDownloadLink($event, subItem)"
+        [class]="getItemClass(subItem)"
+        [innerHTML]="getSafeContent(subItem) ">
+    </a>
+    <ng-container *ngSwitchDefault>
+      <ng-container *ngIf="!getProps(subItem, 'categoryLink') && !isTelephoneLink(subItem)">
+      <a *ngIf="!getProps(subItem, 'categoryLink') && !getProps(subItem, 'assetFormId') && !isGatedFile(subItem) && !isVideo(subItem)"
+        class="cursor-pointer" [ngStyle]="getStyles(subItem)" (click)="goToLink($event, subItem)"
+        [class]="getItemClass(subItem)"
+        [innerHTML]="getSafeContent(subItem) ">
+      </a>
+      <a *ngIf="getProps(subItem, 'assetFormId') || isGatedFile(subItem) || isVideo(subItem)" class="cursor-pointer"
+        [ngStyle]="getStyles(subItem)" [attr.cspobj]="'REPORT'" [attr.csptype]="'DOWNLOADS'"
+        [attr.cspenglishvalue]="getCspReportValue(subItem)" (click)="goToLink($event, subItem)"
+        [class]="getItemClass(subItem)"
+        [innerHTML]="getSafeContent(subItem) ">
+      </a>
+    </ng-container>
+    <ng-container *ngIf="!getProps(subItem, 'categoryLink') && isTelephoneLink(subItem)">
+      <a class="cursor-pointer gconversion-trigger"
+        [ngStyle]="getStyles(subItem)"
+        href="{{getProps(subItem, 'href')}}"
+        [class]="getItemClass(subItem) + ' gconversion-trigger'"
+        [innerHTML]="getSafeContent(subItem) ">
+      </a>
+    </ng-container>
+    <ng-container *ngIf="getProps(subItem, 'categoryLink')">
+      <a *ngIf="!getProps(subItem, 'assetFormId')  && checkSubscribeStatus(subItem)"
+        class="cursor-pointer" [ngStyle]="getStyles(subItem)" [attr.cspobj]="'REPORT'" [attr.csptype]="'LINKS'"
+        [attr.cspenglishvalue]="getCspReportValue(subItem)" (click)="goToLink($event, subItem)"
+        [class]="getItemClass(subItem)"
+        [innerHTML]="getSafeContent(subItem) ">
+      </a>
+    </ng-container>
+    </ng-container>
+    </ng-container>
+  </ng-container>
+  <ng-container *ngIf="subItem.name == 'image' && subItem.type == 'img' && (getProps(subItem, 'href') || getProps(subItem, 'categoryLink'))">
+    <ng-container [ngSwitch]="getProps(subItem, 'btnType')">
+      <img *ngSwitchCase="type.videoLink" [ngStyle]="getStyles(subItem)" (load)="onLoad()" [src]="getImgSrc(subItem, 'src')"
+        [class]="getItemClass(subItem)" (click)="clickWatchVideo($event, subItem)">
+
+        <img *ngSwitchCase="type.categoryLink" [ngStyle]="getStyles(subItem)" (load)="onLoad()" [src]="getImgSrc(subItem, 'src')"
+          [class]="getItemClass(subItem)" [attr.cspobj]="'REPORT'" [attr.csptype]="'LINKS'"
+        [attr.cspenglishvalue]="getCspReportValue(subItem)" (click)="clickCategoryLink($event, subItem)">
+
+      <img *ngSwitchDefault [ngStyle]="getStyles(subItem)" (load)="onLoad()" [src]="getImgSrc(subItem, 'src')"
+        [class]="getItemClass(subItem)" (click)="goToLink($event, subItem)">
+    </ng-container>
+  </ng-container>
+
+  <!-- <a  *ngIf                  = "subItem.name == 'button' && (subItem.class.indexOf('csp-deep-link') > -1 || subItem.innerClass.indexOf('csp-deep-link') > -1 || getProps(subItem, 'assetform') != undefined) " -->
+  <!-- <a  *ngIf                  = "subItem.name == 'button'"
+      class                  = ""
+      
+      [attr.csptype]         = "getCspReportType(subItem)"
+      [attr.cspenglishvalue] = "getCspReportValue(subItem)"
+      (click)                = "goToLink($event, subItem)"
+      [ngStyle]              = "getStyles(subItem)"
+      [href]                 = "getLink(subItem)"
+      [ngClass]              = "subItem.innerClass ? subItem.innerClass : ''"
+      [innerHTML] = "getSafeContent(subItem)"></a> -->
+
+  <a *ngIf="subItem.name == 'paragraph' && getProps(subItem, 'href')" class="cursor-pointer"
+    [ngStyle]="getStyles(subItem)" (click)="goToLink($event, subItem)"
+    [class]="getItemClass(subItem)">
+    <div [ngStyle]="getStyles(subItem)" [class]="getItemClass(subItem)"
+      [innerHTML]="getSafeContent(subItem)"></div>
+  </a>
+  <ng-container [ngSwitch]="subItem.themeClass" *ngIf="subItem.name == 'paragraph' && !getProps(subItem, 'href')" 
+  >
+      <h1  *ngSwitchCase="'heading1'" [innerHTML]="getSafeContent(subItem)" [ngStyle]="getStyles(subItem)"
+      [class]="getItemClass(subItem)"> </h1>
+      <h2  *ngSwitchCase="'heading2'" [innerHTML]="getSafeContent(subItem)" [ngStyle]="getStyles(subItem)"
+      [class]="getItemClass(subItem)"> </h2>
+      <h3  *ngSwitchCase="'heading3'" [innerHTML]="getSafeContent(subItem)" [ngStyle]="getStyles(subItem)"
+      [class]="getItemClass(subItem)"> </h3>
+      <h4  *ngSwitchCase="'heading4'" [innerHTML]="getSafeContent(subItem)" [ngStyle]="getStyles(subItem)"
+      [class]="getItemClass(subItem)"> </h4>
+      <h5  *ngSwitchCase="'heading5'" [innerHTML]="getSafeContent(subItem)" [ngStyle]="getStyles(subItem)"
+      [class]="getItemClass(subItem)"> </h5>
+      <div [innerHTML]="getSafeContent(subItem)"  *ngSwitchDefault [ngStyle]="getStyles(subItem)"
+      [class]="getItemClass(subItem)"></div>
+  </ng-container>
+ 
+
+  <div *ngIf="subItem.name == 'inlineform'" [ngStyle]="getStyles(subItem)"
+    [ngClass]="subItem.class ? subItem.class : ''" [attr.data-id]="loadForm(subItem, 'formId')">
+
+    <div class="render-contact-form">
+
+      <form class="csp-inline-form" [attr.categoryformid]="getProps(subItem, 'formId')" ngNativeValidate [attr.categoryformname]="getFormTitle(subItem)">
+
+        <ng-container *ngFor="let lField of getFields(subItem); let i = index">
+
+          <ng-container [ngSwitch]="getFormFieldType(lField)">
+            <!-- DropDown -->
+            <div *ngSwitchCase="'select' " [attr.fieldid]="lField.id"
+              [attr.mandatory]="lField['statusFormfieldValidationYN']" [class]="getProps(subItem,'class-form-field')"
+              [ngClass]="(lField['statusFormfieldValidationYN']?.toLowerCase() == 'yes')?'object require selectbox form-row':'object selectbox form-row'">
+
+              <select name="{{lField['statusFormfieldName']}}ignore{{i}}" id="{{lField['statusFormfieldName']}}ignore{{i}}" [(ngModel)]="selectModel['$i']" 
+                valtype="mandatoryField" 
+                [attr.error]="translateLabel(subItem, lField['statusFormfieldName'], lField) + 'is required'"
+                [attr.required]="lField['statusFormfieldValidationYN']?.toLowerCase() == 'yes' ? 'required' : null"
+                [class]="getProps(subItem,'class-selectbox')" class="tieValidate csp-form-field">
+                <ng-container *ngFor="let opt of loadFieldOpt(translateLabel(subItem, lField['statusFormfieldName'], lField))">
+                  <option *ngIf="!opt.value" selected value="undefined">{{opt.label}}</option>
+                  <option *ngIf="opt.value" [value]="opt.value">
+                    {{opt.label}} 
+                  </option>
+                </ng-container>
+              </select>
+              <input name="{{lField['statusFormfieldName']}}" id="{{lField['statusFormfieldName']}}" type="text" readonly hidden [value]="selectModel['$i']" >
+
+            </div>
+
+            <!-- Text Field -->
+            <div *ngSwitchCase="'field'" [attr.fieldid]="lField.id"
+              [attr.label]="translateLabel(subItem, lField['statusFormfieldName'], lField)"
+              [attr.mandatory]="lField['statusFormfieldValidationYN']" [class]="getProps(subItem,'class-form-field')"
+              [ngClass]="(lField['statusFormfieldValidationYN']?.toLowerCase() == 'yes')?'object require textbox form-row':'object textbox form-row'">
+
+              <input type="{{getIfEmail(lField['statusFormfieldName'])}}"
+                class="tieValidate csp-form-field form-control" name="{{lField['statusFormfieldName']}}"
+                id="{{lField['statusFormfieldName']}}" [attr.error]="'This field is required'"
+                [attr.valtype]="lField['statusFormfieldValidationType']"
+                class="tieValidate csp-form-field form-control ui-autocomplete-input"
+                [class]="getProps(subItem,'class-textbox')"
+                [attr.required]="lField['statusFormfieldValidationYN']?.toLowerCase() == 'yes' ? 'required' : null"
+                placeholder="{{translateLabel(subItem, lField['statusFormfieldName'], lField)}}" autocomplete="off">
+            </div>
+
+            <div *ngSwitchCase="'checkbox'" [attr.fieldid]="lField.id"
+              [attr.mandatory]="lField['statusFormfieldValidationYN']" [class]="getProps(subItem,'class-form-field')"
+              [ngClass]="(lField['statusFormfieldValidationYN']?.toLowerCase() == 'yes')?'object require form-row mt-2':'object form-row mt-2'">
+            
+              <input type="checkbox" class="tieValidate csp-form-field form-control" hidden
+                name="{{lField['statusFormfieldName']}}" id="{{lField['statusFormfieldName']}}"
+                [attr.error]="'This field is required'" [attr.valtype]="lField['statusFormfieldValidationType']"
+                class="tieValidate csp-form-field form-control ui-autocomplete-input" [class]="getProps(subItem,'class-checkbox')"
+                [attr.required]="lField['statusFormfieldValidationYN']?.toLowerCase() == 'yes' ? 'required' : null"
+                placeholder="{{translateLabel(subItem, lField['statusFormfieldName'], lField)}}" autocomplete="off">
+                <label for="{{lField['statusFormfieldName']}}" class="material-icons cursor-pointer ico-checked text-secondary opa">
+                    check_box
+                </label>
+                <label for="{{lField['statusFormfieldName']}}" class="material-icons cursor-pointer ico-uncheck opacity-50">
+                    check_box_outline_blank
+                </label>
+                <label class="ml-1" for="{{lField['statusFormfieldName']}}">{{getFieldLabel(lField)}} </label>
+            </div>
+            
+
+            <!-- Textarea -->
+            <div *ngSwitchCase="'textarea' " [attr.fieldid]="lField.id"
+              [attr.mandatory]="lField['statusFormfieldValidationYN']" [class]="getProps(subItem,'class-form-field')"
+              [ngClass]="(lField['statusFormfieldValidationYN']?.toLowerCase() == 'yes')?'object require textarea form-row':'object textarea form-row'">
+
+              <textarea cols="50" rows="6" name="{{lField['statusFormfieldName']}}"
+                id="{{lField['statusFormfieldName']}}" error="" valtype="mandatoryField"
+                class="tieValidate csp-form-field form-control"
+                placeholder="{{translateLabel(subItem, lField['statusFormfieldName'], lField)}}"
+                [ngClass]="getProps(subItem,'class-textarea')"></textarea>
+
+            </div>
+
+            <!-- Submit Button -->
+            <div *ngSwitchCase="'submit'" mandatory="False" class="object button form-row">
+              <br>
+              <div [class]="getProps(subItem,'class-form-field')">
+                <button type="submit" [class]="getProps(subItem,'class-button')"
+                  [ngClass]="getProps(subItem,'class-submit')" class="main-form-submit">
+                  {{translateLabel(subItem, lField['statusFormfieldName'], lField)}}
+                </button>
+              </div>
+            </div>
+          </ng-container>
+        </ng-container>
+
+      </form>
+    </div>
+  </div>
+    
+  <ng-container *ngIf="subItem.type == 'section'">
+    <div *ngIf="getProps(subItem, 'backgroundVideo')" class="h-full w-full overflow-hidden absolute">
+      <!-- <video 
+        *ngIf="getBgVideoParam(subItem, 'muted')" 
+        [autoplay]="getBgVideoParam(subItem, 'autoplay')" 
+        [loop]="getBgVideoParam(subItem, 'loop')" 
+        [muted]="'muted'"
+        class="w-full absolute inset-0 left-1/2 min-w-screen-xl z-0 unmuted" style="-webkit-transform: translateX(-50%); transform: translateX(-50%);" >
+        <source [src]="getProps(subItem, 'backgroundVideo')"  type="video/mp4" />
+        Browser not supported 
+    </video> -->
+      <video 
+        autoplay
+        loop
+        [muted]="'muted'"
+        [class]="getProps(subItem, 'backgroundVideoClass')">
+        <source [src]="getProps(subItem, 'backgroundVideo')"  type="video/mp4" />
+        Browser not supported
+    </video>
+    </div>
+  </ng-container>
+</ng-template>

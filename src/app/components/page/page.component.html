@@ -1,0 +1,8 @@
+<div style="position: relative;">
+  <div id="top" style="position: absolute; top: -1000px; left: 0"></div>
+</div>
+<mat-progress-bar mode="indeterminate" *ngIf="!pageLoaded" style="position: -webkit-sticky;position: sticky;top: 0; height: 4px; margin-bottom:-4px;">
+</mat-progress-bar>
+<span style="display:none" csptype="TITLE" cspobj="REPORT">{{categoryTitle}}</span>
+<div [innerHtml]="style" class="hidden"></div>
+<app-list-item [item]="parentItem"></app-list-item>

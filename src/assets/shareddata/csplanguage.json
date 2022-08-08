@@ -1,0 +1,264 @@
+{
+    "CspLanguage": [
+        {
+            "Id": "1",
+            "LanguageCode": "en",
+            "Description": "English Global"
+        },
+        {
+            "Id": "2",
+            "LanguageCode": "de",
+            "Description": "German"
+        },
+        {
+            "Id": "3",
+            "LanguageCode": "fr",
+            "Description": "French"
+        },
+        {
+            "Id": "4",
+            "LanguageCode": "es",
+            "Description": "Spanish"
+        },
+        {
+            "Id": "5",
+            "LanguageCode": "it",
+            "Description": "Italian"
+        },
+        {
+            "Id": "6",
+            "LanguageCode": "p99",
+            "Description": "Brazilian Portuguese"
+        },
+        {
+            "Id": "7",
+            "LanguageCode": "pt",
+            "Description": "Portuguese"
+        },
+        {
+            "Id": "8",
+            "LanguageCode": "ja",
+            "Description": "Japanese"
+        },
+        {
+            "Id": "9",
+            "LanguageCode": "zh",
+            "Description": "Simplified Chinese"
+        },
+        {
+            "Id": "10",
+            "LanguageCode": "tr",
+            "Description": "Turkish"
+        },
+        {
+            "Id": "11",
+            "LanguageCode": "nl",
+            "Description": "Dutch"
+        },
+        {
+            "Id": "12",
+            "LanguageCode": "da",
+            "Description": "Danish"
+        },
+        {
+            "Id": "13",
+            "LanguageCode": "no",
+            "Description": "Norwegian"
+        },
+        {
+            "Id": "14",
+            "LanguageCode": "sv",
+            "Description": "Swedish"
+        },
+        {
+            "Id": "15",
+            "LanguageCode": "ru",
+            "Description": "Russian"
+        },
+        {
+            "Id": "16",
+            "LanguageCode": "ko",
+            "Description": "Korean"
+        },
+        {
+            "Id": "17",
+            "LanguageCode": "eza",
+            "Description": "English - Southern Africa"
+        },
+        {
+            "Id": "18",
+            "LanguageCode": "uk",
+            "Description": "English - Great Britain"
+        },
+        {
+            "Id": "19",
+            "LanguageCode": "ca",
+            "Description": "English - Canada"
+        },
+        {
+            "Id": "20",
+            "LanguageCode": "eie",
+            "Description": "English - Ireland"
+        },
+        {
+            "Id": "21",
+            "LanguageCode": "eau",
+            "Description": "English - Australia"
+        },
+        {
+            "Id": "22",
+            "LanguageCode": "ptb",
+            "Description": "Brazilian Portuguese"
+        },
+        {
+            "Id": "23",
+            "LanguageCode": "esl",
+            "Description": "Latin American Spanish"
+        },
+        {
+            "Id": "24",
+            "LanguageCode": "cs",
+            "Description": "Czech"
+        },
+        {
+            "Id": "25",
+            "LanguageCode": "zht",
+            "Description": "Traditional Chinese"
+        },
+        {
+            "Id": "26",
+            "LanguageCode": "enu",
+            "Description": "English US"
+        },
+        {
+            "Id": "27",
+            "LanguageCode": "pl",
+            "Description": "Polish"
+        },
+        {
+            "Id": "28",
+            "LanguageCode": "enz",
+            "Description": "English - New Zealand"
+        },
+        {
+            "Id": "29",
+            "LanguageCode": "br",
+            "Description": "Bulgarian"
+        },
+        {
+            "Id": "30",
+            "LanguageCode": "hr",
+            "Description": "Croatian"
+        },
+        {
+            "Id": "31",
+            "LanguageCode": "ee",
+            "Description": "Estonian"
+        },
+        {
+            "Id": "32",
+            "LanguageCode": "gr",
+            "Description": "Greek"
+        },
+        {
+            "Id": "33",
+            "LanguageCode": "hu",
+            "Description": "Hungarian"
+        },
+        {
+            "Id": "34",
+            "LanguageCode": "lv",
+            "Description": "Latvian"
+        },
+        {
+            "Id": "35",
+            "LanguageCode": "lt",
+            "Description": "Lithuanian"
+        },
+        {
+            "Id": "36",
+            "LanguageCode": "ro",
+            "Description": "Romanian"
+        },
+        {
+            "Id": "37",
+            "LanguageCode": "rs",
+            "Description": "Serbian"
+        },
+        {
+            "Id": "38",
+            "LanguageCode": "sk",
+            "Description": "Slovakian"
+        },
+        {
+            "Id": "39",
+            "LanguageCode": "si",
+            "Description": "Slovenian"
+        },
+        {
+            "Id": "40",
+            "LanguageCode": "ua",
+            "Description": "Ukrainian"
+        },
+        {
+            "Id": "41",
+            "LanguageCode": "sg",
+            "Description": "Simplified Chinese"
+        },
+        {
+            "Id": "42",
+            "LanguageCode": "nlb",
+            "Description": "Belgium Dutch"
+        },
+        {
+            "Id": "43",
+            "LanguageCode": "fbe",
+            "Description": "French - Belgium"
+        },
+        {
+            "Id": "44",
+            "LanguageCode": "gsw",
+            "Description": "Switzerland – German"
+        },
+        {
+            "Id": "45",
+            "LanguageCode": "fsw",
+            "Description": "Switzerland – French"
+        },
+        {
+            "Id": "46",
+            "LanguageCode": "fi",
+            "Description": "Finnish"
+        },
+        {
+            "Id": "47",
+            "LanguageCode": "at",
+            "Description": "Austrian"
+        },
+        {
+            "Id": "48",
+            "LanguageCode": "chf",
+            "Description": "Switzerland - French"
+        },
+        {
+            "Id": "49",
+            "LanguageCode": "chd",
+            "Description": "Switzerland - German"
+        },
+        {
+            "Id": "50",
+            "LanguageCode": "dat",
+            "Description": "Austrian"
+        },
+        {
+            "Id": "51",
+            "LanguageCode": "isw",
+            "Description": "Switzerland – Italian"
+        },
+        {
+            "Id": "52",
+            "LanguageCode": "fca",
+            "Description": "Canada – French"
+        }
+    ]
+}

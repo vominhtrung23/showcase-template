@@ -1,0 +1,40 @@
+/* INLINE FORM */
+:host ::ng-deep .render-contact-form .form-row-inner { width: 100%; }
+:host ::ng-deep .render-contact-form .form-row-inner .require_symbol { display: none }
+:host ::ng-deep .render-contact-form * {font-size: 21px !important;}
+:host ::ng-deep .render-contact-form .tieContactUsFormFieldCheckboxBlock label {font-family: Calibri, sans-serif !important;
+    font-size: 11px !important; margin-top: -8px;}
+:host ::ng-deep .hover\:border-black {font-weight: 300; font-size: 19px; border: 1px solid transparent;}
+:host ::ng-deep .hover\:border-black:hover {border: 1px solid #000; text-decoration: none; color: rgba(0, 0, 0, 0.87);}
+:host ::ng-deep .asset-btn {
+  color: #000000 !important;
+  border: solid 1px #000000;
+  display: inline-flex;
+  height: 3rem;
+  padding: 0.75rem 2rem;
+  margin: 0.5rem 0;
+  font-size: 14px;
+  font-family: 'Roboto', 'sans-serif';
+  letter-spacing: 0.18rem;
+  align-items: center;
+  text-transform: uppercase;
+}
+:host ::ng-deep .asset-btn:hover {
+  color: #ffffff !important;
+  border-color: #d92231 !important;
+  text-decoration: none !important;
+  background-color: #d92231 !important;
+}
+:host ::ng-deep .section-page-banner-desc-title, :host ::ng-deep .section-page-banner-desc-small {line-height: 100%;}
+:host ::ng-deep .c-pointer, :host ::ng-deep .c-pointer * {cursor: pointer;}
+.tcma-sb input[type=checkbox] ~ .ico-checked,
+.tcma-sb input[type=checkbox]:checked ~ .ico-uncheck {
+  display: none;
+  font-size: 1.5em ;
+}
+.tcma-sb input[type=checkbox]:checked ~ .ico-checked,
+.tcma-sb input[type=checkbox] ~ .ico-uncheck {
+  display: inline-block;
+  font-size: 1.5em 
+}
+  /* EOF INLINE FORM */
