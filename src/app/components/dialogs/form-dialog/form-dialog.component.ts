@@ -270,6 +270,7 @@ export class FormDialogComponent implements OnInit {
             label: element['contentFormFieldLabel'] + this._getAsteriskSymbol(element),
             value: '',
             required: fieldRequired,
+            firstInput: false,
             order: parseInt(element['statusSortOrder'])
           }));
           break;
@@ -290,6 +291,7 @@ export class FormDialogComponent implements OnInit {
       order: 9999
     }));
     this.leadgenFields = cspFields;
+    this.leadgenFields[0].firstInput = true;
     this.form = this.formService.toFormGroup(this.leadgenFields);
     setTimeout(() => {
       this._bindingFormEvent()

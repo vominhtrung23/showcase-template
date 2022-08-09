@@ -7,7 +7,7 @@ export class FieldModel<T> {
     controlType: string;
     type: string;
     options: {key: string, value: string}[];
-  
+    firstInput:boolean;
     constructor(options: {
         value?: T,
         key?: string,
@@ -15,7 +15,8 @@ export class FieldModel<T> {
         required?: boolean,
         order?: number,
         controlType?: string,
-        type?: string
+        type?: string,
+        firstInput?:boolean;
       } = {}) {
       this.value = options.value;
       this.key = options.key || '';
@@ -24,6 +25,7 @@ export class FieldModel<T> {
       this.order = options.order === undefined ? 1 : options.order;
       this.controlType = options.controlType || '';
       this.type = options.type || '';
+      this.firstInput = options.firstInput;
     }
   }
   
