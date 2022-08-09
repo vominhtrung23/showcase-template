@@ -1,7 +1,8 @@
-import { Component, OnInit, Input, ViewEncapsulation ,ViewChild, ElementRef} from '@angular/core';
+import { Component, OnInit, Input, ViewEncapsulation, ViewChild, ElementRef } from '@angular/core';
 import { FieldModel } from 'src/app/shared/models/field.model';
 import { FormGroup } from '@angular/forms';
 import { GlobalService } from 'src/app/services/global.service';
+import { MatInput } from '@angular/material/input';
 
 @Component({
   selector: 'app-leadgenfield',
@@ -9,17 +10,19 @@ import { GlobalService } from 'src/app/services/global.service';
   styleUrls: ['./leadgenfield.component.scss'],
   encapsulation: ViewEncapsulation.None,
 })
+
 export class LeadgenfieldComponent implements OnInit {
   @Input() leadField: FieldModel<string>;
   @Input() form: FormGroup;
-
+ 
   constructor(private _gl: GlobalService) {}
-  @ViewChild("myinput") myInputField: ElementRef;
-ngAfterViewInit() {
-this.myInputField.nativeElement.focus();
-}
-  ngOnInit(): void {}
+  @ViewChild('usernameInput') usrFld: ElementRef;
 
+  ngAfterViewInit() {
+    this.usrFld.nativeElement.focus();
+  }
+  ngOnInit(): void {}
+  
   get isValid() {
     return this.form.controls[this.leadField.key].valid;
   }

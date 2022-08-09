@@ -4,7 +4,7 @@
 
     <mat-form-field *ngSwitchCase="'textbox'" class="csp-field-full-width" class="fieldform" >
       <mat-label>{{leadField.label}}</mat-label>
-      <input *ngIf="leadField.key.indexOf('mail') < 0" matInput placeholder="{{leadField.label}}" value="" [id]="leadField.key" [formControlName]="leadField.key" cdkFocusInitial md-autofocus #myinput>
+      <input *ngIf="leadField.key.indexOf('mail') < 0" matInput placeholder="{{leadField.label}}" value="" [id]="leadField.key" [formControlName]="leadField.key"  #usernameInput>
       <input *ngIf="leadField.key.indexOf('mail') >= 0" pattern="[a-zA-Z0-9.-_]{1,}@[a-zA-Z.-]{2,}[.]{1}[a-zA-Z]{2,}" matInput placeholder="{{leadField.label}}" value="" [id]="leadField.key" [formControlName]="leadField.key">
     </mat-form-field>
 
