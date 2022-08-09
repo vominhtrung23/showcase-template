@@ -19,9 +19,11 @@ export class LeadgenfieldComponent implements OnInit {
   @ViewChild('usernameInput') usrFld: ElementRef;
 
   ngAfterViewInit() {
-    this.usrFld.nativeElement.focus();
+     this.usrFld.nativeElement.get(0).focus();
   }
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    console.log("leadField",this.leadField);
+  }
   
   get isValid() {
     return this.form.controls[this.leadField.key].valid;
